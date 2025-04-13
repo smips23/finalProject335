@@ -1,4 +1,4 @@
-package finalProject335.src.view;
+package view;
 
 public class Main {
     

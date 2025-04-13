@@ -1,8 +1,9 @@
-package finalProject335.src.model;
+package model;
 
+import java.util.Iterator;
 import java.util.List;
 
-public class Grid {
+public class Grid implements Iterable<Card>{
 
     private Card[][] cards;
     private int rows;
@@ -80,6 +81,43 @@ public class Grid {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
+    public void updateGrid(Grid grid){
+    	this.cards = grid.cards;
+    }
+    
+    public void setGridCell(Card card, int row, int column){
+    	if (row > this.rows || column > this.columns){
+    	}
+    	else{
+    		cards[row][column] = card;
+    	}
+    }
+    
+    public Grid copy(){
+    	Grid grid = new Grid(this.rows, this.columns);
+    	grid.cards = this.cards.clone();
+    	return grid;
+    }
+    
+	@Override
+	public Iterator<Card> iterator() {
+		return new Iterator<Card>(){
+			private int columnIndex = 0;
+			private int rowIndex = 0;
+			@Override
+			public boolean hasNext() {
+				return cards[rowIndex].length > columnIndex + 1 || cards.length > rowIndex;
+			}
+			@Override
+			public Card next() {
+				if (cards[rowIndex].length > columnIndex + 1){
+					return cards[rowIndex][columnIndex += 1];
+					}
+				else {
+					return cards[rowIndex+1][columnIndex = 0];
+				}
+			}
+		};
+	}
 }

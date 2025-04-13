@@ -1,4 +1,4 @@
-package finalProject335.src.model;
+package model;
 
 
 public class SpecialCard extends Card{
