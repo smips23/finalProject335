@@ -1,5 +1,7 @@
 package finalProject335.src.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Grid {
@@ -65,21 +67,57 @@ public class Grid {
         }
         cards = new Card[rows][columns];
         
-        List<Card> cardPairs = generateCardPairs();
-        // Place cards on grid
-        //populateGrid(cardPairs);  
+        ArrayList<Card> cardPairs = generateCardPairs();
+        populateGrid(cardPairs);  
         return true;
     }
 
-    private void populateGrid() {
-        // TODO Auto-generated method stub
-        //return null;
+    private void populateGrid(ArrayList<Card> cardPairs) {
+        int index = 0;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < columns; c++) {
+                if (index < cardPairs.size()) {
+                    cards[r][c] = cardPairs.get(index);
+                    index++;
+                }
+            }
+        }
     }
 
-    private List<Card> generateCardPairs() {
-        // TODO Auto-generated method stub
-        return null;
+    private ArrayList<Card> generateCardPairs() {
+        ArrayList<Card> cardPairs = new ArrayList<>();
+        
+        int totalCells = rows * columns;
+        int numPairs;
+        int numSpecialCards = 0;
+        
+        // number of specials
+        if (difficulty == MEDIUM) {
+            numSpecialCards = 1;
+        } else if (difficulty == HARD) {
+            numSpecialCards = 4; 
+        }
+        // Calculate number of pairs accounting for special cards
+        numPairs = (totalCells - numSpecialCards) / 2;
+        
+        // Create pairs of cards with matching values
+        for (int i = 0; i < numPairs; i++) {
+            Card card1 = new Card();
+            card1.setValue(i + 1);
+            
+            Card card2 = new Card();
+            card2.setValue(i + 1);
+            
+            cardPairs.add(card1);
+            cardPairs.add(card2);
+        }
+        // Add special cards if needed
+        for (int i = 0; i < numSpecialCards; i++) {
+            SpecialCard specialCard = new SpecialCard();
+            specialCard.setValue(-1 - i); 
+            cardPairs.add(specialCard);
+        }
+        Collections.shuffle(cardPairs);
+        return cardPairs;
     }
-
-
 }
