@@ -69,7 +69,7 @@ public class Card {
     }
 
     // gets card's value
-    public int getVlue(){
+    public int getValue(){
         return value;
     }
     
