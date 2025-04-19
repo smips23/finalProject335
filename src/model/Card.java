@@ -5,12 +5,14 @@ public class Card {
     private boolean flipped;
     private boolean highlighted;
     private boolean locked;
+    private int value;
 
     // constructor
     public Card(){
-        flipped = false;;
+        flipped = false;
         highlighted = false;
         locked = false;
+        value = -1;
     }
 
     // return if card is flipped
@@ -60,6 +62,17 @@ public class Card {
     public void unlock(){
         locked = false;
     }
+
+    // sets the card's value
+    public void setValue(int val){
+        value = val;
+    }
+
+    // gets card's value
+    public int getValue(){
+        return value;
+    }
+    
 
 
 

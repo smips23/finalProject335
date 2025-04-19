@@ -1,9 +1,4 @@
-package specialCard;
-
-import model.Card;
-import model.Grid;
-import model.SpecialCard;
-import model.Swappable;
+package model;
 
 public class matrixSwap extends SpecialCard implements Swappable<Card>{
 	public matrixSwap(){

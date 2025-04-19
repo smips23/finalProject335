@@ -1,8 +1,4 @@
-package specialCard;
-import model.Card;
-import model.Grid;
-import model.SpecialCard;
-import model.Swappable;
+package model;
 import java.util.Random;
 
 public class swapCard extends SpecialCard implements Swappable<Card>{
