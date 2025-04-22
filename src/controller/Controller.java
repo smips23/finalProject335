@@ -13,7 +13,7 @@ public class Controller implements ActionListener {
 	private String difficulty;
 	
 	public Controller(UI gui, Model model) {
-		this.gui = ui;
+		this.gui = gui;
 		this.model = model;
 		this.mode = null;
 		this.difficulty = null;
