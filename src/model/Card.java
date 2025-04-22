@@ -48,22 +48,14 @@ public class Card {
     }
 
     // highlight card
-    public void highlight(int length){
-    	if (length > 0) {
-    		highlighted = true;
-        	highlightLength = length;
-        	System.out.println("card was highlighted");
-    	}
+    public void highlight(){
+    	highlighted = true;
+    	System.out.println("card was highlighted");
     }
 
     // unhighlight card
     public void unhighlight(){
-    	if (highlightLength == 0) {
-    		highlighted = false;
-        }
-    	else {
-    		highlightLength--;
-    	}
+    	highlighted = false;
     }
 
     //returns highlight length
@@ -77,22 +69,14 @@ public class Card {
     }
 
     // lock card 
-    public void lock(int length){
-        if (length > 0) {
-        	locked = true;
-        	lockedLength = length;
-            System.out.println("card was locked");
-        }
+    public void lock(){
+    	locked = true;
+        System.out.println("card was locked");
     }
 
     // unlock card
     public void unlock(){
-    	if (lockedLength == 0) {
-    		locked = false;
-    	}
-    	else{
-    		lockedLength--;
-    	}
+    	locked = false;
     }
 
     // returns lock length

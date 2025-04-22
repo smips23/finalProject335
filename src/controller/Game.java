@@ -12,6 +12,7 @@ public class Game implements ActionListener {
     private Grid grid;
     private GameView gameView;
     private Card firstCard;
+    private Card secondCard;
     private Timer flipBackTimer;
     
     /**
@@ -70,14 +71,17 @@ public class Game implements ActionListener {
         int col = Integer.parseInt(coords[1]);
         Card card = grid.getCard(row, col);
 
-        if (card == null || card.isFlipped() || card.isLocked()) {
+        
+        if (card == null || card.isLocked()) {
             return;
         }
-        card.flip();
+       
         
         if (firstCard == null) {
             selectFirstCard(card);
-        } else {
+        } else if (secondCard != null){
+        	selectFirstCard(card);
+        }else {
             selectSecondCard(card);
         }
         
@@ -88,8 +92,20 @@ public class Game implements ActionListener {
      * first card
      */
     private void selectFirstCard(Card card) {
+    	// handle previously picked cards
+    	if (firstCard != null) {
+    		firstCard.flip();
+    		firstCard.unhighlight();
+    		if (secondCard != null) {
+    			secondCard.flip();
+    			secondCard.unhighlight();
+    			secondCard = null;
+    		}
+    	}
+        // set new first card\
         firstCard = card;
-        card.highlight(1);
+        firstCard.flip();
+        firstCard.highlight();
         gameView.updateStatus("Select a second card");
     }
     
@@ -97,25 +113,25 @@ public class Game implements ActionListener {
      * second card
      */
     private void selectSecondCard(Card card) {
-        if (firstCard.getValue() == card.getValue()) {
-            handleMatch(card);
+    	secondCard = card;
+    	secondCard.highlight();
+    	secondCard.flip();
+        if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
+            handleMatch();
         } else {
-            handleMismatch(card);
+            handleMismatch();
         }
-        
-        firstCard.unhighlight();
-        firstCard = null;
     }
     
-    private void handleMatch(Card card) {
-        firstCard.lock(1);
-        card.lock(1);
+    private void handleMatch() {
+        firstCard.lock();
+        secondCard.lock();
         gameView.updateStatus("Match found!");
     }
     
-    private void handleMismatch(Card card) {
+    private void handleMismatch() {
         gameView.updateStatus("Not a match. Try again.");
-        flipBackTimer.restart();
+        //flipBackTimer.restart();
     }
  
     private void resetCards() {
