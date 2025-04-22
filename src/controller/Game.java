@@ -89,7 +89,7 @@ public class Game implements ActionListener {
      */
     private void selectFirstCard(Card card) {
         firstCard = card;
-        card.highlight();
+        card.highlight(1);
         gameView.updateStatus("Select a second card");
     }
     
@@ -108,8 +108,8 @@ public class Game implements ActionListener {
     }
     
     private void handleMatch(Card card) {
-        firstCard.lock();
-        card.lock();
+        firstCard.lock(1);
+        card.lock(1);
         gameView.updateStatus("Match found!");
     }
     
