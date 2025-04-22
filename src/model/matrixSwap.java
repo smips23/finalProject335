@@ -1,12 +1,12 @@
 package model;
 
-public class matrixSwap extends SpecialCard implements Swappable<Card>{
+public class matrixSwap extends SpecialCard{
 	public matrixSwap(){
 		super();
 	}
 
 	@Override
-	public void Swap(Grid grid) {
+	public void specialEffect(Grid grid) {
 		int rowLength = grid.getRows();
 		int i = 0;
 		int j = grid.getColumns();
