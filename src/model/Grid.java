@@ -12,6 +12,7 @@ public class Grid implements Iterable<Card>{
     private int rows;
     private int columns;
     private int difficulty;
+    private int remainingPairs;
 
     public static final int EASY = 1;
     public static final int MEDIUM = 2;
@@ -37,6 +38,14 @@ public class Grid implements Iterable<Card>{
         return difficulty;
     }
 
+    public int getRemainingPairs(){
+    	return remainingPairs;
+    }
+    
+    public void pairFound(){
+    	remainingPairs--;
+    }
+    
     public boolean isValidPosition(int row, int col) {
         return row >= 0 && row < rows && col >= 0 && col < columns;
     }
@@ -101,6 +110,7 @@ public class Grid implements Iterable<Card>{
         }
         // Calculate number of pairs accounting for special cards
         numPairs = (totalCells - numSpecialCards) / 2;
+        remainingPairs = numPairs;
         
         // Create pairs of cards with matching values
         for (int i = 0; i < numPairs; i++) {
