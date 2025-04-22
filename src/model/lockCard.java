@@ -16,7 +16,7 @@ public class lockCard extends SpecialCard{
 		Card card = grid.getCard(randomX1, randomY1);
 		while (true) {
 			if (!card.isFlipped()){
-				card.lock(lockLength);
+				//card.lock(lockLength);
 				break;
 			}
 			randomX1 = random.nextInt(grid.getRows());
