@@ -106,8 +106,10 @@ public class UI extends JFrame {
 		layout.show(cardPanel, str);
 	}
 	
+	/**
 	public static void main(String[] args) {
 		UI ui = new UI();
 	}
+	**/
 }
 
