@@ -23,9 +23,9 @@ public class highlightPotentialPair extends SpecialCard{
 		int randomX2 = random.nextInt(grid.getRows());
 		int randomY2 = random.nextInt(grid.getColumns());
 		Card card2 = grid.getCard(randomX2, randomY2);
-		pair1.highlight(highlightLength);
-		pair2.highlight(highlightLength);
-		card1.highlight(highlightLength);
-		card2.highlight(highlightLength);
+		//pair1.highlight(highlightLength);
+		//pair2.highlight(highlightLength);
+		//card1.highlight(highlightLength);
+		//card2.highlight(highlightLength);
 	}
 }

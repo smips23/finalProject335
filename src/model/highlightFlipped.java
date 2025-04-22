@@ -9,7 +9,7 @@ public class highlightFlipped extends SpecialCard{
 	public void specialEffect(Grid grid){
 		for (Card card : grid){
 			if (card.isFlipped()){
-				card.highlight(2);
+				//card.highlight(2);
 			}
 		}
 	}
