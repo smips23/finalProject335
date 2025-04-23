@@ -94,17 +94,17 @@ public class Game implements ActionListener {
     private void selectFirstCard(Card card) {
     	// handle previously picked cards
     	if (firstCard != null) {
-    		firstCard.flip();
+    		firstCard.flip(grid);
     		firstCard.unhighlight();
     		if (secondCard != null) {
-    			secondCard.flip();
+    			secondCard.flip(grid);
     			secondCard.unhighlight();
     			secondCard = null;
     		}
     	}
         // set new first card\
         firstCard = card;
-        firstCard.flip();
+        firstCard.flip(grid);
         firstCard.highlight();
         gameView.updateStatus("Select a second card");
     }
@@ -115,7 +115,7 @@ public class Game implements ActionListener {
     private void selectSecondCard(Card card) {
     	secondCard = card;
     	secondCard.highlight();
-    	secondCard.flip();
+    	secondCard.flip(grid);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
             handleMatch();
         } else {
@@ -139,7 +139,7 @@ public class Game implements ActionListener {
             for (int c = 0; c < grid.getColumns(); c++) {
                 Card card = grid.getCard(r, c);
                 if (card != null && card.isFlipped() && !card.isLocked()) {
-                    card.flip();
+                    card.flip(grid);
                 }
             }
         }

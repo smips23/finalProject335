@@ -3,8 +3,11 @@ import java.util.Random;
 
 public class SpecialCard extends Card{
    
+	private int abilityNum;
+	
     public SpecialCard(){
         super();
+        abilityNum = 0;
     }
     
     public int[][] findRandomPair(Grid grid){
@@ -35,5 +38,76 @@ public class SpecialCard extends Card{
     }
     
     public void specialEffect(Grid grid){}
+    
+    
+    // Flip and activate the special card's ability
+    @Override
+    public void flip(Grid grid) {
+    	if (!(isLocked())) {
+    		if (isFlipped()){
+    			flipped = false;
+    			System.out.println("Special card was flipped to back");
+    			Random random = new Random();
+    	    	abilityNum = random.nextInt(5);
+    	    	doAbility(grid);
+    		}else{
+    			flipped = true;
+    			System.out.println("Special Card was flipped to face");
+    		}
+    	}
+    	else{
+    		if (!(isFlipped())){
+    			System.out.println("Special card is locked and cannot be flipped");
+    		}
+    	}
+    }
+    
+    
+    // choose and call the correct ability
+    private void doAbility(Grid grid) {
+    	if(abilityNum == 0) {
+    		freeze(grid);
+    	}else if (abilityNum == 1) {
+    		swapTwo(grid);
+    	}else if (abilityNum == 2) {
+    		flipMany(grid);
+    	}else if (abilityNum == 3) {
+    		highlightPotentialPairs(grid);
+    	}else if (abilityNum == 4) {
+    		becomeRandomThirdPair(grid);
+    	}
+    }
+    
+    
+    // freeze a number of cards for a turn
+    private void freeze(Grid grid) {
+    	
+    }
+    
+    
+    // swap two random cards
+    private void swapTwo(Grid grid) {
+    	
+    }
+    
+    
+    // flip a random number of cards for a turn
+    private void flipMany(Grid grid) {
+    	
+    }
+    
+    
+    // highlights two potential pairs plus some random cards to throw off
+    private void highlightPotentialPairs(Grid grid) {
+    	
+    }
+    
+    
+    // specialCard becomes the same value as another pair. Now must match three cards. Implement last.
+    private void becomeRandomThirdPair(Grid grid) {
+    	
+    }
+    
+    
 }
 

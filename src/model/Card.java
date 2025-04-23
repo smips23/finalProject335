@@ -2,7 +2,7 @@ package model;
 
 public class Card {
     
-    private boolean flipped;
+    protected boolean flipped;
     private boolean highlighted;
     private boolean locked;
     private int value;
@@ -25,7 +25,7 @@ public class Card {
     }
 
     // alternate flipped orientation
-    public void flip(){
+    public void flip(Grid grid){
     	if (!locked) {
     		if (isFlipped()){
     			flipped = false;

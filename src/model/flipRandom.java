@@ -16,7 +16,7 @@ public class flipRandom extends SpecialCard{
 		int randomY2 = random.nextInt(grid.getColumns());
 		Card card1 = grid.getCard(randomX1, randomY1);
 		Card card2 = grid.getCard(randomX2, randomY2);
-		card1.flip();
-		card2.flip();
+		card1.flip(grid);
+		card2.flip(grid);
 	}
 }
