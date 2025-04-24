@@ -158,15 +158,20 @@ public class Grid implements Iterable<Card>{
 			private int rowIndex = 0;
 			@Override
 			public boolean hasNext() {
-				return cards[rowIndex].length > columnIndex + 1 || cards.length > rowIndex;
-			}
+				while (rowIndex < cards.length && columnIndex >= cards[rowIndex].length) {
+	                rowIndex++;
+	                columnIndex = 0;
+	            }
+	            return rowIndex < cards.length;
+	        }
+			
 			@Override
 			public Card next() {
-				if (cards[rowIndex].length > columnIndex + 1){
-					return cards[rowIndex][columnIndex += 1];
-					}
-				else {
-					return cards[rowIndex+1][columnIndex = 0];
+				if (hasNext()) {
+					return cards[rowIndex][columnIndex++];
+	            }
+				else{
+					return null;
 				}
 			}
 		};
