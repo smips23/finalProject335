@@ -5,18 +5,18 @@ public class Card {
     protected boolean flipped;
     private boolean highlighted;
     protected boolean locked;
+    protected boolean freeze;
+    protected boolean thirdPair;
     private int value;
-    private int highlightLength;
-    private int lockedLength;
 
     // constructor
     public Card(){
         flipped = false;
         highlighted = false;
         locked = false;
+        freeze = false;
+        thirdPair = false;
         value = -1;
-        highlightLength = 0;
-        lockedLength = 0;
     }
 
     // return if card is flipped
@@ -57,11 +57,6 @@ public class Card {
     public void unhighlight(){
     	highlighted = false;
     }
-
-    //returns highlight length
-    public int getHighlightLength(){
-    	return highlightLength;
-    }
     
     // returns if card is locked
     public boolean isLocked(){
@@ -78,10 +73,29 @@ public class Card {
     public void unlock(){
     	locked = false;
     }
+    
+ // returns if card is frozen
+    public boolean isFrozen(){
+        return freeze;
+    }
 
-    // returns lock length
-    public int getLockedLength(){
-    	return lockedLength;
+    // lock card 
+    public void freeze(){
+    	freeze = true;
+        System.out.println("card was frozen");
+    }
+
+    // unlock card
+    public void unfreeze(){
+    	freeze = false;
+    }
+    
+    public boolean thirdPair(){
+    	return thirdPair;
+    }
+    
+    public void addThirdPair(){
+    	thirdPair = true;
     }
     
     // sets the card's value

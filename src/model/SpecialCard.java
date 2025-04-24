@@ -10,6 +10,7 @@ public class SpecialCard extends Card{
         abilityNum = 0;
     }
     
+    //finds a random pair that is not yet flipped
     private int[][] findRandomPair(Grid grid){
     	int[][] result = new int[2][2];
     	int i = 0;
@@ -59,6 +60,7 @@ public class SpecialCard extends Card{
     	}
     }
     
+    // does an ability based on the abilityNum
     private void doAbility(Grid grid){
     	if (abilityNum == 0){
     		addLife();
@@ -91,6 +93,7 @@ public class SpecialCard extends Card{
     	//lives++;
     }
     
+    //flips 2 random cards to show the player
     private void flipRandom(Grid grid){
 		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
@@ -103,6 +106,7 @@ public class SpecialCard extends Card{
 		card2.flip(grid);
 	}
     
+    //swaps 2 random unflipped cards
     private void swapCards(Grid grid) {
 		if (grid.getRemainingPairs() == 0){
 			return;
@@ -135,14 +139,15 @@ public class SpecialCard extends Card{
 		grid.setGridCell(card1, randomX2, randomY2);
 	}
 
+    //freezes the card, making it non-interactable
     private void freeze(Grid grid){
 		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		Card card = grid.getCard(randomX1, randomY1);
 		while (true) {
-			if (!card.isLocked()){
-				card.lock();
+			if (!card.isFrozen()){
+				card.freeze();
 				break;
 			}
 			randomX1 = random.nextInt(grid.getRows());
@@ -152,14 +157,16 @@ public class SpecialCard extends Card{
     	}
 	}
     
+    //highlight cards that were previously flipped
     private void highlightFlipped(Grid grid){
 		for (Card card : grid){
 			if (card.isFlipped()){
-				//card.highlight(2);
+				card.highlight();
 			}
 		}
 	}
     
+    //highlights a random pair and 2 random cards that are unflipped
     private void highlightPotentialPair(Grid grid){
 		int pair[][] = this.findRandomPair(grid);
 		if (pair[0][0] == 0 && pair[0][1] == 0 && pair[1][0] == 0 && pair[1][1] == 0){
@@ -180,6 +187,7 @@ public class SpecialCard extends Card{
 		card2.highlight();
 	}
     
+    //rotates the matrix clockwise 90 degrees once 
     private void matrixSwap(Grid grid) {
 		int rowLength = grid.getRows();
 		int i = 0;
@@ -206,7 +214,21 @@ public class SpecialCard extends Card{
     
     // specialCard becomes the same value as another pair. Now must match three cards. Implement last.
     private void becomeRandomThirdPair(Grid grid) {
-    	
+		int pair[][] = this.findRandomPair(grid);
+		if (pair[0][0] == 0 && pair[0][1] == 0 && pair[1][0] == 0 && pair[1][1] == 0){
+			return;
+		}
+		Card card1 = grid.getCard(pair[0][0], pair[0][1]);
+		Card card2 = grid.getCard(pair[1][0], pair[1][1]);
+		if (card1.thirdPair() == false && card2.thirdPair() == false) {
+			card1.addThirdPair();
+			card2.addThirdPair();
+		}
+		else{
+			return;
+		}
+    	this.setValue(card1.getValue());
+    	this.addThirdPair();
     }
     
 }
