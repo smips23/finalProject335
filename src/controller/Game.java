@@ -6,6 +6,7 @@ import javax.swing.Timer;
 import model.Grid;
 import model.Card;
 import view.GameView;
+import java.util.ArrayList;
 
 public class Game implements ActionListener {
 
@@ -15,6 +16,9 @@ public class Game implements ActionListener {
     private Card secondCard;
     private Timer flipBackTimer;
     private int secondsRemaining;
+    private int lives;
+    private ArrayList<Card> seenCardValues;
+    private boolean alreadySeen;
     
     /**
      * Create a new game with mode and difficulty
@@ -42,6 +46,10 @@ public class Game implements ActionListener {
         gameView = new GameView(grid.getRows(), grid.getColumns(), this);
         gameView.updateGrid(grid);
         gameView.setVisible(true);
+        lives = 3;
+        gameView.updateLife("Lives: " + lives);
+        alreadySeen = false;
+        seenCardValues = new ArrayList<Card>();
     }
 
     
@@ -135,11 +143,17 @@ public class Game implements ActionListener {
     			secondCard = null;
     		}
     	}
-        // set new first card\
+        // set new first card
         firstCard = card;
         firstCard.flip(grid);
         firstCard.highlight();
         gameView.updateStatus("Select a second card");
+        
+        // set label to already seen notif if card has been seen
+        if (!addSeenCardValue(firstCard)) {
+        	gameView.updateLife("Lives: " + lives + " !SEEN!");
+        	alreadySeen = true;
+        }
     }
     
     /**
@@ -149,6 +163,7 @@ public class Game implements ActionListener {
     	secondCard = card;
     	secondCard.highlight();
     	secondCard.flip(grid);
+    	addSeenCardValue(secondCard);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
             handleMatch();
         } else {
@@ -160,12 +175,21 @@ public class Game implements ActionListener {
         firstCard.lock();
         secondCard.lock();
         gameView.updateStatus("Match found!");
+        if(alreadySeen) {
+        	gameView.updateLife("Lives: " + lives);
+        	alreadySeen = false;
+        }
         checkGameOver();
     }
     
     private void handleMismatch() {
         gameView.updateStatus("Not a match. Try again.");
-        //flipBackTimer.restart();
+        if(alreadySeen) {
+        	lives--;
+        	gameView.updateLife("Lives: " + lives);
+        	alreadySeen = false;
+        	checkGameOver();
+        }
     }
  
     private void resetCards() {
@@ -188,6 +212,14 @@ public class Game implements ActionListener {
     }
     
     private void checkGameOver() {
+    	// check for life loss
+    	if (lives == 0) {
+    		flipBackTimer.stop();
+    		gameView.updateStatus("You lose! All lives gone!");
+    		resetCards();
+    	}
+    	
+    	// check for match win
         boolean allLocked = true;
         for (int r = 0; r < grid.getRows(); r++) {
             for (int c = 0; c < grid.getColumns(); c++) {
@@ -202,5 +234,19 @@ public class Game implements ActionListener {
             flipBackTimer.stop();
             gameView.updateStatus("Congratulations! You won!");
         }
+    }
+    
+    // returns true if successfully added non duplicate val, returns false if already exists
+    private boolean addSeenCardValue(Card card) {
+    	if (!seenCardValues.contains(card)) {
+    		seenCardValues.add(card);
+    	}
+    	for (int i = 0; i < seenCardValues.size(); i++) {
+    		if (seenCardValues.get(i).getValue() == card.getValue() && seenCardValues.get(i) != card) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
     }
 }
