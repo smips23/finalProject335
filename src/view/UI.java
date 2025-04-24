@@ -31,7 +31,10 @@ public class UI extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setUp();
 	}
-	
+
+	/*
+	 * Creates the main menu window to select the mode and difficulty for the game
+	 */
 	public void setUp() {
 		layout = new CardLayout();
 		cardPanel = new JPanel(layout);
@@ -102,6 +105,9 @@ public class UI extends JFrame {
 		this.setVisible(true);
 	}
 
+	/*
+	 * Switches the panel of the main menu window
+	 */
 	public void switchCard(String str) {
 		layout.show(cardPanel, str);
 	}
