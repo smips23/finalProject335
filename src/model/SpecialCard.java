@@ -45,11 +45,9 @@ public class SpecialCard extends Card{
     		if (isFlipped()){
     			flipped = false;
     			System.out.println("Special card was flipped to back");
-    			Random random = new Random();
-    	    	abilityNum = random.nextInt(5);
-    	    	doAbility(grid);
     		}else{
     			flipped = true;
+    	    	doAbility(grid);
     			System.out.println("Special Card was flipped to face");
     		}
     	}
@@ -62,31 +60,47 @@ public class SpecialCard extends Card{
     
     // does an ability based on the abilityNum
     private void doAbility(Grid grid){
+    	Random random = new Random();
+    	//if (lifeMode == true){ 
+    	//abilityNum = random.nextInt(0,7)}
+    	//else{
+    	abilityNum = random.nextInt(1,7);
+    	abilityNum = 5; //0,2,5,6
     	if (abilityNum == 0){
     		addLife();
+    		System.out.println("one extra life has been granted");
     	}
     	if (abilityNum == 1){
     		flipRandom(grid);
+    		System.out.println("random card has been flipped");
     	}
     	if (abilityNum == 2){
     		swapCards(grid);
+    		System.out.println("2 cards hafve been swapped");
     	}
     	if (abilityNum == 3){
     		freeze(grid);
+    		System.out.println("one card has been frozen");
     	}
     	if (abilityNum == 4){
     		highlightFlipped(grid);
+    		System.out.println("highlight flipped cards");
     	}
     	if (abilityNum == 5){
     		highlightPotentialPair(grid);
+    		System.out.println("potential pairs highlighted");
     	}
     	if (abilityNum == 6){
     		matrixSwap(grid);
+    		System.out.println("grid has been transposed");
     	}
     	if (abilityNum == 7){ 
     		becomeRandomThirdPair(grid);
+    		System.out.println("this card is now the third pair for one of the pairs");
     	}
-		this.locked = true;
+    	if (abilityNum != 7) {
+    		this.locked = true;
+    	}
     }
     
     private void addLife(){
@@ -102,6 +116,23 @@ public class SpecialCard extends Card{
 		int randomY2 = random.nextInt(grid.getColumns());
 		Card card1 = grid.getCard(randomX1, randomY1);
 		Card card2 = grid.getCard(randomX2, randomY2);
+		while (true) {
+			if (card1.isLocked()) {
+				card1 = grid.getCard(randomX1, randomY1);
+			}
+			if (card2.isLocked()) {
+				card2 = grid.getCard(randomX2, randomY2);
+			}
+			if (!card1.isLocked() && !card2.isLocked()){
+				if (card1 != card2) {
+					break;
+				}
+			}
+			randomX1 = random.nextInt(grid.getRows());
+			randomY1 = random.nextInt(grid.getColumns());
+			randomX2 = random.nextInt(grid.getRows());
+			randomY2 = random.nextInt(grid.getColumns());
+		}
 		card1.flip(grid);
 		card2.flip(grid);
 	}
@@ -125,7 +156,7 @@ public class SpecialCard extends Card{
 			if (card2.isLocked()) {
 				card2 = grid.getCard(randomX2, randomY2);
 			}
-			if (!card1.isLocked() && !card2.isFlipped()){
+			if (!card1.isLocked() && !card2.isLocked()){
 				if (card1 != card2) {
 					break;
 				}
@@ -153,7 +184,6 @@ public class SpecialCard extends Card{
 			randomX1 = random.nextInt(grid.getRows());
 			randomY1 = random.nextInt(grid.getColumns());
 			card = grid.getCard(randomX1, randomY1);
-			break;
     	}
 	}
     
@@ -181,6 +211,23 @@ public class SpecialCard extends Card{
 		int randomX2 = random.nextInt(grid.getRows());
 		int randomY2 = random.nextInt(grid.getColumns());
 		Card card2 = grid.getCard(randomX2, randomY2);
+		while (true) {
+			if (card1.isLocked()) {
+				card1 = grid.getCard(randomX1, randomY1);
+			}
+			if (card2.isLocked()) {
+				card2 = grid.getCard(randomX2, randomY2);
+			}
+			if (!card1.isLocked() && !card2.isLocked()){
+				if (card1 != card2) {
+					break;
+				}
+			}
+			randomX1 = random.nextInt(grid.getRows());
+			randomY1 = random.nextInt(grid.getColumns());
+			randomX2 = random.nextInt(grid.getRows());
+			randomY2 = random.nextInt(grid.getColumns());
+		}
 		pair1.highlight();
 		pair2.highlight();
 		card1.highlight();
@@ -189,15 +236,16 @@ public class SpecialCard extends Card{
     
     //rotates the matrix clockwise 90 degrees once 
     private void matrixSwap(Grid grid) {
-		int rowLength = grid.getRows();
+		int rowLength = grid.getRows() - 1;
 		int i = 0;
-		int j = grid.getColumns();
+		int j = grid.getColumns() - 1;
 		Grid newGrid = new Grid(grid.getRows(),grid.getColumns());
 		for (Card card : grid){
+			System.out.println(i + " " + j);
 			if (j < 0){
 				break;
 			}
-			if (i < rowLength) {
+			if (i <= rowLength) {
 				newGrid.setGridCell(card, i, j);
 				i++;
 				continue;
@@ -206,6 +254,7 @@ public class SpecialCard extends Card{
 				i = 0;
 				j--;
 				newGrid.setGridCell(card, i, j);
+				i++;
 				continue;
 			}
 		}
@@ -214,7 +263,8 @@ public class SpecialCard extends Card{
     
     // specialCard becomes the same value as another pair. Now must match three cards. Implement last.
     private void becomeRandomThirdPair(Grid grid) {
-		int pair[][] = this.findRandomPair(grid);
+		/*
+    	int pair[][] = this.findRandomPair(grid);
 		if (pair[0][0] == 0 && pair[0][1] == 0 && pair[1][0] == 0 && pair[1][1] == 0){
 			return;
 		}
@@ -229,6 +279,7 @@ public class SpecialCard extends Card{
 		}
     	this.setValue(card1.getValue());
     	this.addThirdPair();
+    	*/
     }
     
 }
