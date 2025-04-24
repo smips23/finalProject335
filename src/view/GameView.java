@@ -131,7 +131,9 @@ public class GameView extends JFrame {
         
         // Disable locked cards
         button.setEnabled(!card.isLocked());
-        button.setEnabled(!card.isFrozen());
+        if(!card.isLocked() && card.isFrozen()) {
+        	button.setEnabled(!card.isFrozen());
+        }
     }
 
     private Color getColorForValue(int value) {
