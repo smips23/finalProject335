@@ -4,10 +4,17 @@ import java.util.Random;
 public class SpecialCard extends Card{
    
 	private int abilityNum;
+	private String abilityMessage;
 	
     public SpecialCard(){
         super();
         abilityNum = 0;
+    }
+    
+    
+    // returns ability message
+    public String getAbilityMessage() {
+    	return abilityMessage;
     }
     
     //finds a random pair that is not yet flipped
@@ -64,43 +71,44 @@ public class SpecialCard extends Card{
     	//if (lifeMode == true){ 
     	//abilityNum = random.nextInt(0,7)}
     	//else{
-    	abilityNum = random.nextInt(1,7);
-    	abilityNum = 5; //0,2,5,6
+    	abilityNum = random.nextInt(1,6);
+    	abilityNum = 6; //0,2,5,6
     	if (abilityNum == 0){
     		addLife();
     		System.out.println("one extra life has been granted");
+    		abilityMessage = "*SPECIAL CARD* one extra life has been granted";
     	}
     	if (abilityNum == 1){
     		flipRandom(grid);
-    		System.out.println("random card has been flipped");
+    		System.out.println("random two cards have been flipped");
+    		abilityMessage = "*SPECIAL CARD* two random cards have been flipped";
     	}
     	if (abilityNum == 2){
     		swapCards(grid);
-    		System.out.println("2 cards hafve been swapped");
+    		System.out.println("2 cards have been swapped");
+    		abilityMessage = "*SPECIAL CARD* 2 cards hafve been swapped";
     	}
     	if (abilityNum == 3){
     		freeze(grid);
     		System.out.println("one card has been frozen");
+    		abilityMessage = "*SPECIAL CARD* one card has been frozen";
     	}
     	if (abilityNum == 4){
     		highlightFlipped(grid);
     		System.out.println("highlight flipped cards");
+    		abilityMessage = "*SPECIAL CARD* highlight flipped cards";
     	}
     	if (abilityNum == 5){
     		highlightPotentialPair(grid);
     		System.out.println("potential pairs highlighted");
+    		abilityMessage = "*SPECIAL CARD* potential pairs highlighted";
     	}
     	if (abilityNum == 6){
     		matrixSwap(grid);
-    		System.out.println("grid has been transposed");
+    		System.out.println("grid has been rotated");
+    		abilityMessage = "*SPECIAL CARD* grid has been rotated";
     	}
-    	if (abilityNum == 7){ 
-    		becomeRandomThirdPair(grid);
-    		System.out.println("this card is now the third pair for one of the pairs");
-    	}
-    	if (abilityNum != 7) {
-    		this.locked = true;
-    	}
+    	this.locked = true;
     }
     
     private void addLife(){
