@@ -19,6 +19,10 @@ public class Controller implements ActionListener {
 		this.difficulty = null;
 	}	
 
+	/*
+	 * Updates the UI based on the action command received
+	 * and runs the Game when both mode and difficulty are selected
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
