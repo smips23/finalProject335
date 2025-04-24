@@ -43,10 +43,10 @@ public class GameView extends JFrame {
         statusLabel = new JLabel("Select a card to begin", JLabel.CENTER);
         statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
-        timerLabel = new JLabel("Time", JLabel.LEFT);
+        timerLabel = new JLabel("", JLabel.CENTER);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
-        lifeLabel = new JLabel("Lives: ", JLabel.CENTER);
+        lifeLabel = new JLabel("", JLabel.CENTER);
         lifeLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
         JButton backButton = new JButton("Back to Menu");
@@ -54,9 +54,9 @@ public class GameView extends JFrame {
         backButton.addActionListener(controller);
         
         statusPanel.add(statusLabel, BorderLayout.NORTH);
-        statusPanel.add(timerLabel, BorderLayout.WEST);
-        statusPanel.add(lifeLabel, BorderLayout.SOUTH);
-        statusPanel.add(backButton, BorderLayout.EAST);
+        statusPanel.add(timerLabel, BorderLayout.EAST);
+        statusPanel.add(lifeLabel, BorderLayout.WEST);
+        statusPanel.add(backButton, BorderLayout.SOUTH);
         add(statusPanel, BorderLayout.SOUTH);
         
         // Set window size and position

@@ -38,8 +38,8 @@ public class Controller implements ActionListener {
 			mode = "lives";
 			gui.switchCard("difficulty");
 		}
-		if (command.equals("special")) {
-			mode = "special";
+		if (command.equals("crazy")) {
+			mode = "crazy";
 			gui.switchCard("difficulty");
 		}	
 		if (command.equals("easy")) {
