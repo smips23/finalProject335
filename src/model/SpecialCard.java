@@ -3,8 +3,11 @@ import java.util.Random;
 
 public class SpecialCard extends Card{
    
+	private int abilityNum;
+	
     public SpecialCard(){
         super();
+        abilityNum = 0;
     }
     
     private int[][] findRandomPair(Grid grid){
@@ -34,30 +37,52 @@ public class SpecialCard extends Card{
 		return result;
     }
     
-    //@Override
-    public void flip(Grid grid){
-    	Random random = new Random();
-    	int randomNumber = random.nextInt(0, 6);
-    	if (randomNumber == 0){
+ // Flip and activate the special card's ability
+    @Override
+    public void flip(Grid grid) {
+    	if (!(isLocked())) {
+    		if (isFlipped()){
+    			flipped = false;
+    			System.out.println("Special card was flipped to back");
+    			Random random = new Random();
+    	    	abilityNum = random.nextInt(5);
+    	    	doAbility(grid);
+    		}else{
+    			flipped = true;
+    			System.out.println("Special Card was flipped to face");
+    		}
+    	}
+    	else{
+    		if (!(isFlipped())){
+    			System.out.println("Special card is locked and cannot be flipped");
+    		}
+    	}
+    }
+    
+    private void doAbility(Grid grid){
+    	if (abilityNum == 0){
     		addLife();
     	}
-    	if (randomNumber == 1){
+    	if (abilityNum == 1){
     		flipRandom(grid);
     	}
-    	if (randomNumber == 2){
+    	if (abilityNum == 2){
     		swapCards(grid);
     	}
-    	if (randomNumber == 3){
-    		lockCard(grid);
+    	if (abilityNum == 3){
+    		freeze(grid);
     	}
-    	if (randomNumber == 4){
+    	if (abilityNum == 4){
     		highlightFlipped(grid);
     	}
-    	if (randomNumber == 5){
+    	if (abilityNum == 5){
     		highlightPotentialPair(grid);
     	}
-    	if (randomNumber == 6){
+    	if (abilityNum == 6){
     		matrixSwap(grid);
+    	}
+    	if (abilityNum == 7){ 
+    		becomeRandomThirdPair(grid);
     	}
 		this.locked = true;
     }
@@ -74,8 +99,8 @@ public class SpecialCard extends Card{
 		int randomY2 = random.nextInt(grid.getColumns());
 		Card card1 = grid.getCard(randomX1, randomY1);
 		Card card2 = grid.getCard(randomX2, randomY2);
-		card1.flip();
-		card2.flip();
+		card1.flip(grid);
+		card2.flip(grid);
 	}
     
     private void swapCards(Grid grid) {
@@ -110,18 +135,16 @@ public class SpecialCard extends Card{
 		grid.setGridCell(card1, randomX2, randomY2);
 	}
 
-    private void lockCard(Grid grid){
+    private void freeze(Grid grid){
 		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		Card card = grid.getCard(randomX1, randomY1);
 		while (true) {
-			//switch to freeze or smth
-			/*if (!card.isLocked()){
+			if (!card.isLocked()){
 				card.lock();
 				break;
-				*/
-			//}
+			}
 			randomX1 = random.nextInt(grid.getRows());
 			randomY1 = random.nextInt(grid.getColumns());
 			card = grid.getCard(randomX1, randomY1);
@@ -180,5 +203,11 @@ public class SpecialCard extends Card{
 		}
 		grid.updateGrid(newGrid);
 	}
+    
+    // specialCard becomes the same value as another pair. Now must match three cards. Implement last.
+    private void becomeRandomThirdPair(Grid grid) {
+    	
+    }
+    
 }
 
