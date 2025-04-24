@@ -57,8 +57,8 @@ public class UI extends JFrame {
 		livesButton.addActionListener(controller);
 		modePanel.add(livesButton);
 		
-		JButton specialButton = new JButton("Special Card Mode");
-		specialButton.setActionCommand("special");
+		JButton specialButton = new JButton("Crazy Mode");
+		specialButton.setActionCommand("crazy");
 		specialButton.addActionListener(controller);
 		modePanel.add(specialButton);
 		

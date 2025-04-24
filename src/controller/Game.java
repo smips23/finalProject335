@@ -20,14 +20,24 @@ public class Game implements ActionListener {
     private int lives;
     private ArrayList<Card> seenCardValues;
     private boolean alreadySeen;
+    private boolean isTimedMode;
+    private boolean isLivesMode;
     
     /**
      * Create a new game with mode and difficulty
      */
     public Game(String mode, String difficulty) {
+        isTimedMode = "timed".equals(mode);
+        isLivesMode = "lives".equals(mode);
+        if(mode.equals("crazy")) {
+        	isLivesMode = true;
+        	isTimedMode = true;
+        }
         initGrid(difficulty);
         initGameView();
-        initTimer();
+        if(isTimedMode) {
+        	initTimer();
+        }
     }
     
     private void initGrid(String difficulty) {
@@ -48,7 +58,9 @@ public class Game implements ActionListener {
         gameView.updateGrid(grid);
         gameView.setVisible(true);
         lives = 3;
-        gameView.updateLife("Lives: " + lives);
+        if(isLivesMode) {
+        	gameView.updateLife("Lives: " + lives);
+        }
         alreadySeen = false;
         seenCardValues = new ArrayList<Card>();
     }
@@ -98,7 +110,9 @@ public class Game implements ActionListener {
         
         if ("back_to_menu".equals(command)) {
             gameView.dispose();
-            flipBackTimer.stop();
+            if(isTimedMode) {
+            	flipBackTimer.stop();
+            }
         } else if (command.contains(",")) {
             handleCardSelection(command);
         }
@@ -118,8 +132,10 @@ public class Game implements ActionListener {
         
         if (firstCard == null) {
             selectFirstCard(card);
-            if (!flipBackTimer.isRunning()) {
-                startTimer(); // Start timer on first card selection
+            if(isTimedMode) {
+	            if (!flipBackTimer.isRunning()) {
+	                startTimer(); // Start timer on first card selection
+	            }
             }
         } else if (secondCard != null){
         	selectFirstCard(card);
@@ -153,9 +169,11 @@ public class Game implements ActionListener {
         checkForSpecial(firstCard);
         
         // set label to already seen notif if card has been seen
-        if (!addSeenCardValue(firstCard)) {
-        	gameView.updateLife("Lives: " + lives + " !SEEN!");
-        	alreadySeen = true;
+        if (isLivesMode) {
+	        if (!addSeenCardValue(firstCard)) {
+	        	gameView.updateLife("Lives: " + lives + " !SEEN!");
+	        	alreadySeen = true;
+	        }
         }
     }
     
@@ -179,7 +197,7 @@ public class Game implements ActionListener {
         firstCard.lock();
         secondCard.lock();
         gameView.updateStatus("Match found!");
-        if(alreadySeen) {
+        if(alreadySeen && isLivesMode) {
         	gameView.updateLife("Lives: " + lives);
         	alreadySeen = false;
         }
@@ -188,7 +206,7 @@ public class Game implements ActionListener {
     
     private void handleMismatch() {
         gameView.updateStatus("Not a match. Try again.");
-        if(alreadySeen) {
+        if(alreadySeen && isLivesMode) {
         	lives--;
         	gameView.updateLife("Lives: " + lives);
         	alreadySeen = false;
@@ -217,8 +235,10 @@ public class Game implements ActionListener {
     
     private void checkGameOver() {
     	// check for life loss
-    	if (lives == 0) {
-    		flipBackTimer.stop();
+    	if (lives == 0 && isLivesMode) {
+    		if (isTimedMode) {
+    			flipBackTimer.stop();
+    		}
     		gameView.updateStatus("You lose! All lives gone!");
     		resetCards();
     	}
@@ -235,7 +255,9 @@ public class Game implements ActionListener {
             }
         }
         if (allLocked) {
-            flipBackTimer.stop();
+        	if (isTimedMode) {
+        		flipBackTimer.stop();
+        	}
             gameView.updateStatus("Congratulations! You won!");
         }
     }
