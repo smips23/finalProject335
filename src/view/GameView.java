@@ -13,6 +13,7 @@ import model.Card;
 public class GameView extends JFrame {
     private JButton[][] cardButtons;
     private JLabel statusLabel;
+    private JLabel timerLabel;
     private int rows;
     private int cols;
     
@@ -41,11 +42,15 @@ public class GameView extends JFrame {
         statusLabel = new JLabel("Select a card to begin", JLabel.CENTER);
         statusLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
+        timerLabel = new JLabel("Time", JLabel.LEFT);
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        
         JButton backButton = new JButton("Back to Menu");
         backButton.setActionCommand("back_to_menu");
         backButton.addActionListener(controller);
         
         statusPanel.add(statusLabel, BorderLayout.CENTER);
+        statusPanel.add(timerLabel, BorderLayout.WEST);
         statusPanel.add(backButton, BorderLayout.EAST);
         add(statusPanel, BorderLayout.SOUTH);
         
@@ -160,5 +165,9 @@ public class GameView extends JFrame {
         
     public void updateStatus(String message) {
         statusLabel.setText(message);
+    }
+    
+    public void updateTime(String time) {
+    	timerLabel.setText(time);
     }
 }

@@ -14,6 +14,7 @@ public class Game implements ActionListener {
     private Card firstCard;
     private Card secondCard;
     private Timer flipBackTimer;
+    private int secondsRemaining;
     
     /**
      * Create a new game with mode and difficulty
@@ -43,12 +44,40 @@ public class Game implements ActionListener {
         gameView.setVisible(true);
     }
 
+    
     private void initTimer() {
-        flipBackTimer = new Timer(1000, e -> {
-            resetCards();
-            updateGameView();
+        secondsRemaining = 60; 
+        gameView.updateTime(formatTime(secondsRemaining));
+
+        flipBackTimer = new Timer(1000, e -> { 
+            secondsRemaining--;
+            if (secondsRemaining >= 0) {
+                gameView.updateTime(formatTime(secondsRemaining));
+            }
+            if (secondsRemaining <= 0) {
+                flipBackTimer.stop(); 
+                resetCards(); 
+                updateGameView();
+                gameView.updateStatus("Time's up! Game over.");
+            }
         });
-        flipBackTimer.setRepeats(false);
+        flipBackTimer.setRepeats(true);
+    }
+
+    // Helper method to format seconds into "MM:SS"
+    private String formatTime(int seconds) {
+        int minutes = seconds / 60;
+        int secs = seconds % 60;
+        return String.format("%d:%02d", minutes, secs); // "1:00", "0:45"
+    }
+    
+    // Start or reset timer
+    private void startTimer() {
+        if (flipBackTimer != null && !flipBackTimer.isRunning()) {
+            secondsRemaining = 60; // Reset to 60 seconds
+            gameView.updateTime(formatTime(secondsRemaining)); // Update initial label
+            flipBackTimer.start();
+        }
     }
     
     /**
@@ -60,6 +89,7 @@ public class Game implements ActionListener {
         
         if ("back_to_menu".equals(command)) {
             gameView.dispose();
+            flipBackTimer.stop();
         } else if (command.contains(",")) {
             handleCardSelection(command);
         }
@@ -79,9 +109,12 @@ public class Game implements ActionListener {
         
         if (firstCard == null) {
             selectFirstCard(card);
+            if (!flipBackTimer.isRunning()) {
+                startTimer(); // Start timer on first card selection
+            }
         } else if (secondCard != null){
         	selectFirstCard(card);
-        }else {
+        } else {
             selectSecondCard(card);
         }
         
@@ -94,17 +127,17 @@ public class Game implements ActionListener {
     private void selectFirstCard(Card card) {
     	// handle previously picked cards
     	if (firstCard != null) {
-    		firstCard.flip();
+    		firstCard.flip(grid);
     		firstCard.unhighlight();
     		if (secondCard != null) {
-    			secondCard.flip();
+    			secondCard.flip(grid);
     			secondCard.unhighlight();
     			secondCard = null;
     		}
     	}
         // set new first card\
         firstCard = card;
-        firstCard.flip();
+        firstCard.flip(grid);
         firstCard.highlight();
         gameView.updateStatus("Select a second card");
     }
@@ -115,7 +148,7 @@ public class Game implements ActionListener {
     private void selectSecondCard(Card card) {
     	secondCard = card;
     	secondCard.highlight();
-    	secondCard.flip();
+    	secondCard.flip(grid);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
             handleMatch();
         } else {
@@ -127,6 +160,7 @@ public class Game implements ActionListener {
         firstCard.lock();
         secondCard.lock();
         gameView.updateStatus("Match found!");
+        checkGameOver();
     }
     
     private void handleMismatch() {
@@ -138,14 +172,35 @@ public class Game implements ActionListener {
         for (int r = 0; r < grid.getRows(); r++) {
             for (int c = 0; c < grid.getColumns(); c++) {
                 Card card = grid.getCard(r, c);
-                if (card != null && card.isFlipped() && !card.isLocked()) {
-                    card.flip();
+                if (card != null && card.isFlipped()) {
+                	card.unlock();
+                    card.flip(grid);
+                    card.unhighlight();
                 }
             }
         }
+        firstCard = null;
+        secondCard = null;
     }
     
     private void updateGameView() {
         gameView.updateGrid(grid);
+    }
+    
+    private void checkGameOver() {
+        boolean allLocked = true;
+        for (int r = 0; r < grid.getRows(); r++) {
+            for (int c = 0; c < grid.getColumns(); c++) {
+                Card card = grid.getCard(r, c);
+                if (card != null && !card.isLocked()) {
+                    allLocked = false;
+                    break;
+                }
+            }
+        }
+        if (allLocked) {
+            flipBackTimer.stop();
+            gameView.updateStatus("Congratulations! You won!");
+        }
     }
 }
