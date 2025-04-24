@@ -53,9 +53,9 @@ public class GameView extends JFrame {
         backButton.setActionCommand("back_to_menu");
         backButton.addActionListener(controller);
         
-        statusPanel.add(statusLabel, BorderLayout.CENTER);
+        statusPanel.add(statusLabel, BorderLayout.NORTH);
         statusPanel.add(timerLabel, BorderLayout.WEST);
-        statusPanel.add(lifeLabel, BorderLayout.NORTH);
+        statusPanel.add(lifeLabel, BorderLayout.SOUTH);
         statusPanel.add(backButton, BorderLayout.EAST);
         add(statusPanel, BorderLayout.SOUTH);
         
@@ -131,6 +131,7 @@ public class GameView extends JFrame {
         
         // Disable locked cards
         button.setEnabled(!card.isLocked());
+        button.setEnabled(!card.isFrozen());
     }
 
     private Color getColorForValue(int value) {

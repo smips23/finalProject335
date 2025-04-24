@@ -7,6 +7,7 @@ import model.Grid;
 import model.Card;
 import view.GameView;
 import java.util.ArrayList;
+import model.SpecialCard;
 
 public class Game implements ActionListener {
 
@@ -149,6 +150,8 @@ public class Game implements ActionListener {
         firstCard.highlight();
         gameView.updateStatus("Select a second card");
         
+        checkForSpecial(firstCard);
+        
         // set label to already seen notif if card has been seen
         if (!addSeenCardValue(firstCard)) {
         	gameView.updateLife("Lives: " + lives + " !SEEN!");
@@ -164,6 +167,7 @@ public class Game implements ActionListener {
     	secondCard.highlight();
     	secondCard.flip(grid);
     	addSeenCardValue(secondCard);
+    	checkForSpecial(firstCard);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
             handleMatch();
         } else {
@@ -249,4 +253,11 @@ public class Game implements ActionListener {
     	
     	return true;
     }
+    
+    private void checkForSpecial(Card card) {
+    	if (card instanceof SpecialCard) {
+    		gameView.updateStatus(((SpecialCard)card).getAbilityMessage());
+    	}
+    }
+    
 }
