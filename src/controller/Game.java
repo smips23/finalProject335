@@ -78,6 +78,7 @@ public class Game implements ActionListener {
             if (secondsRemaining <= 0) {
                 flipBackTimer.stop(); 
                 resetCards(); 
+                freezeAll();
                 updateGameView();
                 gameView.updateStatus("Time's up! Game over.");
             }
@@ -229,6 +230,17 @@ public class Game implements ActionListener {
         secondCard = null;
     }
     
+    private void freezeAll() {
+    	for (int r = 0; r < grid.getRows(); r++) {
+            for (int c = 0; c < grid.getColumns(); c++) {
+                Card card = grid.getCard(r, c);
+                card.freeze();
+            }
+        }
+    	firstCard = null;
+    	secondCard = null;
+    }
+    
     private void updateGameView() {
         gameView.updateGrid(grid);
     }
@@ -241,6 +253,8 @@ public class Game implements ActionListener {
     		}
     		gameView.updateStatus("You lose! All lives gone!");
     		resetCards();
+    		freezeAll();
+    		updateGameView();
     	}
     	
     	// check for match win
