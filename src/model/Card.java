@@ -4,7 +4,7 @@ public class Card {
     
     private boolean flipped;
     private boolean highlighted;
-    private boolean locked;
+    protected boolean locked;
     private int value;
     private int highlightLength;
     private int lockedLength;
