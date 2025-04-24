@@ -14,6 +14,7 @@ public class GameView extends JFrame {
     private JButton[][] cardButtons;
     private JLabel statusLabel;
     private JLabel timerLabel;
+    private JLabel lifeLabel;
     private int rows;
     private int cols;
     
@@ -45,12 +46,16 @@ public class GameView extends JFrame {
         timerLabel = new JLabel("Time", JLabel.LEFT);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 14));
         
+        lifeLabel = new JLabel("Lives: ", JLabel.CENTER);
+        lifeLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        
         JButton backButton = new JButton("Back to Menu");
         backButton.setActionCommand("back_to_menu");
         backButton.addActionListener(controller);
         
         statusPanel.add(statusLabel, BorderLayout.CENTER);
         statusPanel.add(timerLabel, BorderLayout.WEST);
+        statusPanel.add(lifeLabel, BorderLayout.NORTH);
         statusPanel.add(backButton, BorderLayout.EAST);
         add(statusPanel, BorderLayout.SOUTH);
         
@@ -169,5 +174,9 @@ public class GameView extends JFrame {
     
     public void updateTime(String time) {
     	timerLabel.setText(time);
+    }
+    
+    public void updateLife(String lives) {
+    	lifeLabel.setText(lives);
     }
 }
