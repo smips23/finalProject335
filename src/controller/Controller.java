@@ -49,6 +49,7 @@ public class Controller implements ActionListener {
 		}
 		if (command.equals("back")) {
 			mode = null;
+			difficulty = null;
 			gui.switchCard("mode");
 		}
 		if (mode != null && difficulty != null) {
