@@ -14,7 +14,7 @@ public class Card {
         flipped = false;
         highlighted = false;
         locked = false;
-        freeze = false;
+        freeze = false; 
         thirdPair = false;
         value = -1;
     }
