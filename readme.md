@@ -19,7 +19,7 @@ This project follows the **Model-View-Controller (MVC)**
 
 ## Code Design
 
-Model Package:
+#### Model:
 
 Card.java: Base class for all cards with properties like flipped, locked, highlighted
 Grid.java: Creates the grid, based on difficulty.
@@ -27,14 +27,14 @@ SpecialCard.java: Extends Card with special abilities that affect gameplay
 Game.java: Implements the core game logic and rules
 
 
-View Package:
+#### View:
 
 UI.java: Main menu with game mode and difficulty selection
 GameView.java: Game board display with card buttons
 Main.java: startup view
 
 
-Controller Package:
+#### Controller:
 
 Controller.java: Handles user input from the main menu
 Game.java: Implements ActionListener to process game actions
