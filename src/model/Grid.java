@@ -9,6 +9,7 @@ import java.util.List;
 public class Grid implements Iterable<Card>{
 
     private Card[][] cards;
+    protected ArrayList<Card> recentCards;
     private int rows;
     private int columns;
     private int difficulty;
@@ -22,7 +23,7 @@ public class Grid implements Iterable<Card>{
         this.rows = rows;
         this.columns = columns;
         this.cards = new Card[rows][columns];
-   
+        this.recentCards = new ArrayList<Card>();
     }
     // getters for all instance variables
 
@@ -176,4 +177,19 @@ public class Grid implements Iterable<Card>{
 			}
 		};
 	}
+	
+	//adds a card to the recentCards ArrayList
+	public void addRecentCards(Card card){
+		if (card instanceof SpecialCard){
+			return;
+		}
+		if (this.recentCards.size() > 2) {
+			this.recentCards.remove(0);
+			this.recentCards.add(card);
+		}
+		else {
+			this.recentCards.add(card);
+		}
+	}
+	
 }

@@ -24,6 +24,10 @@ public class Card {
         return flipped == true;
     }
 
+    public void setFlip(boolean flip){
+    	flipped = flip;
+    }
+    
     // alternate flipped orientation
     public void flip(Grid grid){
     	if (!locked) {

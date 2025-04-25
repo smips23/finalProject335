@@ -72,7 +72,7 @@ public class SpecialCard extends Card{
     	//abilityNum = random.nextInt(0,7)}
     	//else{
     	abilityNum = random.nextInt(1,6);
-    	abilityNum = 6; //0,2,5,6
+    	abilityNum = 4; //0,1,2,3,5,6
     	if (abilityNum == 0){
     		addLife();
     		System.out.println("one extra life has been granted");
@@ -109,6 +109,7 @@ public class SpecialCard extends Card{
     		abilityMessage = "*SPECIAL CARD* grid has been rotated";
     	}
     	this.locked = true;
+    	this.setFlip(true);
     }
     
     private void addLife(){
@@ -176,6 +177,8 @@ public class SpecialCard extends Card{
 		}
 		grid.setGridCell(card2, randomX1, randomY1);
 		grid.setGridCell(card1, randomX2, randomY2);
+		card1.highlight();
+		card2.highlight();
 	}
 
     //freezes the card, making it non-interactable
@@ -186,6 +189,9 @@ public class SpecialCard extends Card{
 		Card card = grid.getCard(randomX1, randomY1);
 		while (true) {
 			if (!card.isFrozen()){
+				if (!card.isHighlighted()){
+					card.highlight();
+				}
 				card.freeze();
 				break;
 			}
@@ -197,8 +203,8 @@ public class SpecialCard extends Card{
     
     //highlight cards that were previously flipped
     private void highlightFlipped(Grid grid){
-		for (Card card : grid){
-			if (card.isFlipped()){
+		for (Card card : grid.recentCards){
+			if (!card.isLocked() && !card.isHighlighted()) {
 				card.highlight();
 			}
 		}

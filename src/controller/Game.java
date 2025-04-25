@@ -129,7 +129,6 @@ public class Game implements ActionListener {
         if (card == null || card.isLocked()) {
             return;
         }
-       
         
         if (firstCard == null) {
             selectFirstCard(card);
@@ -143,7 +142,6 @@ public class Game implements ActionListener {
         } else {
             selectSecondCard(card);
         }
-        
         updateGameView();
     }
     
@@ -160,11 +158,13 @@ public class Game implements ActionListener {
     			secondCard.unhighlight();
     			secondCard = null;
     		}
+        	resetCardStatus();
     	}
         // set new first card
         firstCard = card;
         firstCard.flip(grid);
         firstCard.highlight();
+        grid.addRecentCards(card);
         gameView.updateStatus("Select a second card");
         
         checkForSpecial(firstCard);
@@ -185,6 +185,7 @@ public class Game implements ActionListener {
     	secondCard = card;
     	secondCard.highlight();
     	secondCard.flip(grid);
+    	grid.addRecentCards(card);
     	addSeenCardValue(secondCard);
     	checkForSpecial(firstCard);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
@@ -192,6 +193,22 @@ public class Game implements ActionListener {
         } else {
             handleMismatch();
         }
+    }
+    
+    private void resetCardStatus(){
+    	for (Card card : grid){
+    		if (card.isFrozen()){
+    			card.unfreeze();
+    		}
+    		if (!card.isLocked()){
+    			if (card.isHighlighted()){
+    				card.unhighlight();
+    				}
+    			if (card.isFlipped()){
+    				card.setFlip(false);
+    			}
+    		}
+    	}
     }
     
     private void handleMatch() {
