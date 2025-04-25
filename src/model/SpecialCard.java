@@ -4,13 +4,20 @@ import java.util.Random;
 public class SpecialCard extends Card{
    
 	private int abilityNum;
+	Random random;
 	private String abilityMessage;
 	
     public SpecialCard(){
         super();
-        abilityNum = 0;
+    	random = new Random();
+    	abilityNum = random.nextInt(1,6);
     }
     
+    public void setAbility(int num){
+    	if (0 <= num && num <= 6){
+    		abilityNum = num;
+    	}
+    }
     
     // returns ability message
     public String getAbilityMessage() {
@@ -20,6 +27,10 @@ public class SpecialCard extends Card{
     //finds a random pair that is not yet flipped
     private int[][] findRandomPair(Grid grid){
     	int[][] result = new int[2][2];
+    	result[0][0] = -1;
+    	result[0][1] = -1;
+    	result[1][0] = -1;
+    	result[1][1] = -1;
     	int i = 0;
     	if (grid.getRemainingPairs() > 0) {
     		Random random = new Random();
@@ -28,15 +39,19 @@ public class SpecialCard extends Card{
 			Card card = grid.getCard(randomX, randomY);
 			result[0][0] = randomX;
 			result[0][1] = randomY;
-			while (card.isFlipped()){
+			while (card.isLocked()){
 				randomX = random.nextInt(grid.getRows());
 				randomY = random.nextInt(grid.getColumns());
 				card = grid.getCard(randomX, randomY);
 			}
 			for (Card otherCard: grid){
-				if (card == otherCard){
+				if (card.getValue() == otherCard.getValue()){
 					result[1][0] = i / grid.getRows();
 					result[1][1] = i % grid.getRows();
+					if (result[1][0] == result[0][0] && result[1][1] == result[0][1]){
+						i++;
+						continue;
+					}
 					return result;
 				}
 				i++;
@@ -67,12 +82,7 @@ public class SpecialCard extends Card{
     
     // does an ability based on the abilityNum
     private void doAbility(Grid grid){
-    	Random random = new Random();
-    	//if (lifeMode == true){ 
-    	//abilityNum = random.nextInt(0,7)}
-    	//else{
-    	abilityNum = random.nextInt(1,6);
-    	abilityNum = 4; //0,1,2,3,5,6
+    	abilityNum = 5;
     	if (abilityNum == 0){
     		addLife();
     		System.out.println("one extra life has been granted");
@@ -118,7 +128,6 @@ public class SpecialCard extends Card{
     
     //flips 2 random cards to show the player
     private void flipRandom(Grid grid){
-		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		int randomX2 = random.nextInt(grid.getRows());
@@ -151,7 +160,6 @@ public class SpecialCard extends Card{
 		if (grid.getRemainingPairs() == 0){
 			return;
 		}
-		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		int randomX2 = random.nextInt(grid.getRows());
@@ -165,7 +173,7 @@ public class SpecialCard extends Card{
 			if (card2.isLocked()) {
 				card2 = grid.getCard(randomX2, randomY2);
 			}
-			if (!card1.isLocked() && !card2.isLocked()){
+			if (!card1.isLocked() && !card2.isLocked() || (card1 == null || card2 == null)){
 				if (card1 != card2) {
 					break;
 				}
@@ -183,7 +191,6 @@ public class SpecialCard extends Card{
 
     //freezes the card, making it non-interactable
     private void freeze(Grid grid){
-		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		Card card = grid.getCard(randomX1, randomY1);
@@ -213,12 +220,11 @@ public class SpecialCard extends Card{
     //highlights a random pair and 2 random cards that are unflipped
     private void highlightPotentialPair(Grid grid){
 		int pair[][] = this.findRandomPair(grid);
-		if (pair[0][0] == 0 && pair[0][1] == 0 && pair[1][0] == 0 && pair[1][1] == 0){
+		if ((pair[0][0] == -1 && pair[0][1] == -1) && (pair[1][0] == -1 && pair[1][1] == -1)){
 			return;
 		}
 		Card pair1 = grid.getCard(pair[0][0], pair[0][1]);
 		Card pair2 = grid.getCard(pair[1][0], pair[1][1]);
-		Random random = new Random();
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
 		Card card1 = grid.getCard(randomX1, randomY1);
@@ -274,27 +280,5 @@ public class SpecialCard extends Card{
 		}
 		grid.updateGrid(newGrid);
 	}
-    
-    // specialCard becomes the same value as another pair. Now must match three cards. Implement last.
-    private void becomeRandomThirdPair(Grid grid) {
-		/*
-    	int pair[][] = this.findRandomPair(grid);
-		if (pair[0][0] == 0 && pair[0][1] == 0 && pair[1][0] == 0 && pair[1][1] == 0){
-			return;
-		}
-		Card card1 = grid.getCard(pair[0][0], pair[0][1]);
-		Card card2 = grid.getCard(pair[1][0], pair[1][1]);
-		if (card1.thirdPair() == false && card2.thirdPair() == false) {
-			card1.addThirdPair();
-			card2.addThirdPair();
-		}
-		else{
-			return;
-		}
-    	this.setValue(card1.getValue());
-    	this.addThirdPair();
-    	*/
-    }
-    
 }
 
