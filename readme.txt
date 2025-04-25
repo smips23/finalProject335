@@ -10,10 +10,8 @@
 
 
 ## Design
-This project follows the **Model-View-Controller (MVC)** pattern to organize the codebase into separate concerns:
-- **Model**: Manages game data and logic
-- **View**: Handles GUI components and rendering
-- **Controller**: Processes user input and updates the model/view accordingly
+This project follows the **Model-View-Controller (MVC)** 
+
 
 ## UML
 
