@@ -21,9 +21,7 @@ This project follows the **Model-View-Controller (MVC)**
 
 ## Features: Special Cards
 
-## Setup and Running
-
-## Running the Application
+## How to run
 
 - Clone the repository
 - Open the project in your IDE
