@@ -22,7 +22,7 @@ This project follows the **Model-View-Controller (MVC)**
 #### Model:
 
 - Card.java: Base class for all cards with properties like flipped, locked, highlighted
-- Grid.java: Creates the grid, based on difficulty.
+- Grid.java: Creates the grid, based on difficulty. (Avoided Primitive Obsession: Used final constants for difficulty)
 - SpecialCard.java: Extends Card with special abilities that affect gameplay
 - Game.java: Implements the core game logic and rules
 
