@@ -8,13 +8,10 @@
 
 ## Project Overview
 
-
 ## Design
 This project follows the **Model-View-Controller (MVC)** 
 
-
 ## UML
-
 
 ## Design Patterns
 - **Observer Pattern**: Used to update the GUI automatically whenever there are changes in the model.
@@ -22,9 +19,7 @@ This project follows the **Model-View-Controller (MVC)**
 
 ## Code Design
 
-
 ## Features: Special Cards
-
 
 ## Setup and Running
 
