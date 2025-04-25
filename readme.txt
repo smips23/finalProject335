@@ -24,7 +24,7 @@ This project follows the **Model-View-Controller (MVC)**
 ## Setup and Running
 
 ### Running the Application
-```bash
+
 # Clone the repository
 
 # Open the project in your IDE
