@@ -4,17 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import view.UI;
-import model.Model;
+import model.Game;
 
 public class Controller implements ActionListener {
 	private UI gui;
-	private Model model;
 	private String mode;
 	private String difficulty;
 	
-	public Controller(UI gui, Model model) {
-		this.gui = gui;
-		this.model = model;
+	public Controller(UI gui) {
+		this.gui = ui;
 		this.mode = null;
 		this.difficulty = null;
 	}	
