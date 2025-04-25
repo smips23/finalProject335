@@ -7,10 +7,13 @@ import model.Grid;
 import model.Card;
 import view.GameView;
 import java.util.ArrayList;
+import model.Observer;
+
 import model.SpecialCard;
 
-public class Game implements ActionListener {
+public class Game implements ActionListener, Observer {
 
+	private ArrayList<Observer> observers;
     private Grid grid;
     private GameView gameView;
     private Card firstCard;
@@ -51,6 +54,7 @@ public class Game implements ActionListener {
         
         grid = new Grid(0, 0);
         grid.createGrid(difficultyLevel);
+        grid.registerObserver(this);
     }
 
     private void initGameView() {
@@ -63,6 +67,7 @@ public class Game implements ActionListener {
         }
         alreadySeen = false;
         seenCardValues = new ArrayList<Card>();
+        grid.registerObserver(gameView);
     }
 
     
@@ -295,5 +300,31 @@ public class Game implements ActionListener {
     		gameView.updateStatus(((SpecialCard)card).getAbilityMessage());
     	}
     }
+    
+    public void registerObserver(Observer o) {
+    	this.observers.add(o);
+    }
+    
+    public void deregisterObserver(Observer o) {
+    	this.observers.remove(o);
+    }
+    
+    private void notifyObservers(String event, Object obj) {
+    	for (Observer o : observers) {
+    		o.update(event, obj);
+    	}
+    }
+
+	@Override
+	public void update(String event, Object obj) {
+		if (event.equals("card_flipped")) {
+			Card card = (Card) obj;
+			System.out.println("Card was flipped to face");
+		}
+		else if (event.equals("pair_found")){
+			System.out.println("Pair found");
+		}
+		
+	}
     
 }

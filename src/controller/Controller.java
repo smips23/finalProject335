@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import view.UI;
-import model.Game;
+import controller.Game;
 
 public class Controller implements ActionListener {
 	private UI gui;
@@ -12,7 +12,7 @@ public class Controller implements ActionListener {
 	private String difficulty;
 	
 	public Controller(UI gui) {
-		this.gui = ui;
+		this.gui = gui;
 		this.mode = null;
 		this.difficulty = null;
 	}	
@@ -57,6 +57,16 @@ public class Controller implements ActionListener {
 		if (mode != null && difficulty != null) {
 			Game game = new Game(mode, difficulty);
 		}
+	}
+	
+	// used for testing
+	public String getMode() {
+		return this.mode;
+	}
+	
+	// used for testing
+	public String getDifficulty() {
+		return this.difficulty;
 	}
 }
 
