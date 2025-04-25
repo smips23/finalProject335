@@ -6,7 +6,7 @@
 - Anthony
 - Jack
 
-## Project Overview ##
+##Project Overview##
 
 ## Design
 This project follows the **Model-View-Controller (MVC)** 
