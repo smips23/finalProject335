@@ -1,4 +1,4 @@
-*CSc 335 Spring 2025 Final Project*
+# CSc 335 Spring 2025 Final Project
 
 ## Team Members
 - Zayyan
@@ -7,36 +7,33 @@
 - Jack
 
 ## Project Overview
-[Brief description of your project]
+
 
 ## Design
-This project follows the MVC pattern
+This project follows the **Model-View-Controller (MVC)** pattern to organize the codebase into separate concerns:
+- **Model**: Manages game data and logic
+- **View**: Handles GUI components and rendering
+- **Controller**: Processes user input and updates the model/view accordingly
 
 ## UML
-[Include your UML diagram here]
+
 
 ## Design Patterns
-- **Observer Pattern**: Used for GUI updates
-- **MVC**: Separation of concerns between data, logic, and presentation
+- **Observer Pattern**: Used to update the GUI automatically whenever there are changes in the model.
+- **MVC Pattern**
 
 ## Code Design
-[Explain your code structure and key design decisions]
+
 
 ## Features: Special Cards
-[Describe the special cards feature of your project]
+
 
 ## Setup and Running
 
 ### Running the Application
-```
-Clone the repository
-Go to Main.java file under the View package and look for the run command.
-```
+```bash
+# Clone the repository
 
-## AI-Generated Code
-1. View Package
-   [Explain what parts of the View package were AI-generated and what they do]
+# Open the project in your IDE
 
-## Development Process
-- Agile methodology with at least one or more 10-20 min meetings every week
-- GitHub for collaboration
+# Navigate to Main.java inside the View package and run the file
