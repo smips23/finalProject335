@@ -6,7 +6,7 @@
 - Anthony
 - Jack
 
-##Project Overview##
+## Project Overview
 
 ## Design
 This project follows the **Model-View-Controller (MVC)** 
@@ -23,10 +23,8 @@ This project follows the **Model-View-Controller (MVC)**
 
 ## Setup and Running
 
-### Running the Application
+## Running the Application
 
-# Clone the repository
-
-# Open the project in your IDE
-
-# Navigate to Main.java inside the View package and run the file
+- Clone the repository
+- Open the project in your IDE
+- Navigate to Main.java inside the View package and run the file
