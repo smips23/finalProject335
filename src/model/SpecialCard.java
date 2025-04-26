@@ -4,21 +4,24 @@ import java.util.Random;
 public class SpecialCard extends Card{
    
 	private int abilityNum;
-	Random random;
+	private Random random;
 	private String abilityMessage;
 	
+	// Constructor, now has ability Num and a consistent random object
     public SpecialCard(){
         super();
     	random = new Random();
     	abilityNum = random.nextInt(1,6);
     }
     
+    // manually set ability num for testing
     public void setAbility(int num){
     	if (0 <= num && num <= 6){
     		abilityNum = num;
     	}
     }
     
+    // manually set seed for testing purposes
 	public void setSeed(int num){
 			random = new Random(num);
 	}
@@ -125,6 +128,7 @@ public class SpecialCard extends Card{
     	this.setFlip(true);
     }
     
+    // did not use this ability
     private void addLife(){
     	//lives++;
     }
