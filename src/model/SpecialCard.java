@@ -82,7 +82,6 @@ public class SpecialCard extends Card{
     
     // does an ability based on the abilityNum
     private void doAbility(Grid grid){
-    	abilityNum = 5;
     	if (abilityNum == 0){
     		addLife();
     		System.out.println("one extra life has been granted");
