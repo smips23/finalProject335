@@ -14,7 +14,7 @@ public class Card {
         flipped = false;
         highlighted = false;
         locked = false;
-        freeze = false; 
+        freeze = false;
         thirdPair = false;
         value = -1;
     }
@@ -24,6 +24,10 @@ public class Card {
         return flipped == true;
     }
 
+    public void setFlip(boolean flip){
+    	flipped = flip;
+    }
+    
     // alternate flipped orientation
     public void flip(Grid grid){
     	if (!locked) {
@@ -107,4 +111,10 @@ public class Card {
     public int getValue(){
         return value;
     }
+    
+
+
+
+    
+
 }
