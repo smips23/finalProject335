@@ -142,6 +142,14 @@ public class Grid implements Iterable<Card>{
     	this.cards = grid.cards;
     }
     
+    public void flipCard(int row, int col) {
+    	Card c = this.getCard(row, col);
+    	if (!c.isFlipped()) {
+    		c.flip(this);
+    		notifyObservers("card_flipped", c);
+    	}
+    }
+
     public void setGridCell(Card card, int row, int column){
     	if (row > this.rows || column > this.columns){
     	}
