@@ -31,36 +31,44 @@ public class Grid implements Iterable<Card>{
     }
     // getters for all instance variables
 
+    // return grid rows
     public int getRows(){
         return rows;
     }
 
+    // return grid columns
     public int getColumns() {
         return columns;
     }
 
+    // return difficulty
     public int getDifficulty() {
         return difficulty;
     }
 
+    // return remainingPairs
     public int getRemainingPairs(){
     	return remainingPairs;
     }
     
+    // if pair is found decrease pairsFound by one
     public void pairFound(){
     	remainingPairs--;
     }
     
+    // check whether row and col selection is valid for grid
     public boolean isValidPosition(int row, int col) {
         return row >= 0 && row < rows && col >= 0 && col < columns;
     }
     
+    // return Card at valid position
     public Card getCard(int row, int col) {
         if (!isValidPosition(row, col)) {
             return null;
         }
         return cards[row][col];
     }
+    
     // create grid based on difficulty
     public boolean createGrid(int difficulty) {
         this.difficulty = difficulty;
@@ -88,6 +96,7 @@ public class Grid implements Iterable<Card>{
         return true;
     }
 
+    // add cards into cards[][] to populate grid
     private void populateGrid(ArrayList<Card> cardPairs) {
         int index = 0;
         for (int r = 0; r < rows; r++) {
@@ -100,6 +109,7 @@ public class Grid implements Iterable<Card>{
         }
     }
 
+    // create number of card pairs based on the difficulty
     private ArrayList<Card> generateCardPairs() {
         ArrayList<Card> cardPairs = new ArrayList<>();
         
@@ -138,10 +148,12 @@ public class Grid implements Iterable<Card>{
         return cardPairs;
     }
     
+    // update grid with current cards info
     public void updateGrid(Grid grid){
     	this.cards = grid.cards;
     }
     
+    // flip a Card in grid position
     public void flipCard(int row, int col) {
     	Card c = this.getCard(row, col);
     	if (!c.isFlipped()) {
@@ -150,6 +162,7 @@ public class Grid implements Iterable<Card>{
     	}
     }
 
+    // manually change a certain Card at a grid position
     public void setGridCell(Card card, int row, int column){
     	if (row > this.rows || column > this.columns){
     	}
@@ -158,12 +171,14 @@ public class Grid implements Iterable<Card>{
     	}
     }
     
+    // copy and return this grid
     public Grid copy(){
     	Grid grid = new Grid(this.rows, this.columns);
     	grid.cards = this.cards.clone();
     	return grid;
     }
     
+    // iterator for Grid
 	@Override
 	public Iterator<Card> iterator() {
 		return new Iterator<Card>(){
@@ -204,14 +219,17 @@ public class Grid implements Iterable<Card>{
 		}
 	}
 	
+	// add observer into observer list
 	public void registerObserver(Observer o) {
 		this.observers.add(o);
 	}
 	
+	// remove an observer from observer list
 	public void deregisterObserver(Observer o) {
 		this.observers.remove(o);
 	}
 	
+	// update each opbserver 
 	private void notifyObservers(String event, Object obj) {
 		for (Observer o : observers) {
 			o.update(event, obj);

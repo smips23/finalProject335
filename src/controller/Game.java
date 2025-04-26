@@ -44,6 +44,7 @@ public class Game implements ActionListener, Observer {
         }
     }
     
+    // create a grid with size based on difficulty
     private void initGrid(String difficulty) {
         int difficultyLevel = Grid.EASY;
         
@@ -58,6 +59,7 @@ public class Game implements ActionListener, Observer {
         grid.registerObserver(this);
     }
 
+    // Update/create the view with the created grid and based on mode
     private void initGameView() {
         gameView = new GameView(grid.getRows(), grid.getColumns(), this);
         gameView.updateGrid(grid);
@@ -70,7 +72,7 @@ public class Game implements ActionListener, Observer {
         seenCardValues = new ArrayList<Card>();
     }
 
-    
+    // creates the Timer starting at 60 seconds and updates the gameView
     private void initTimer() {
         secondsRemaining = 60; 
         gameView.updateTime(formatTime(secondsRemaining));
@@ -124,6 +126,7 @@ public class Game implements ActionListener, Observer {
         }
     }
     
+    // When a card is selected this will be called and carry out card effects
     private void handleCardSelection(String command) {
         String[] coords = command.split(",");
         int row = Integer.parseInt(coords[0]);
@@ -199,6 +202,7 @@ public class Game implements ActionListener, Observer {
         }
     }
     
+    // reset the card's status on certain cases
     private void resetCardStatus(){
     	for (Card card : grid){
     		if (card.isFrozen()){
@@ -215,6 +219,7 @@ public class Game implements ActionListener, Observer {
     	}
     }
     
+    // handles what happens when both selected cards are pairs
     private void handleMatch() {
         firstCard.lock();
         secondCard.lock();
@@ -227,6 +232,7 @@ public class Game implements ActionListener, Observer {
         checkGameOver();
     }
     
+    // handles what happens when both selected cards are not pairs
     private void handleMismatch() {
         gameView.updateStatus("Not a match. Try again.");
         checkForSpecial(secondCard);
@@ -238,6 +244,7 @@ public class Game implements ActionListener, Observer {
         }
     }
  
+    // reset all of the cards in the grid to end the game
     private void resetCards() {
         for (int r = 0; r < grid.getRows(); r++) {
             for (int c = 0; c < grid.getColumns(); c++) {
@@ -253,6 +260,7 @@ public class Game implements ActionListener, Observer {
         secondCard = null;
     }
     
+    // freeze cards to end the game on a loss
     private void freezeAll() {
     	for (int r = 0; r < grid.getRows(); r++) {
             for (int c = 0; c < grid.getColumns(); c++) {
@@ -268,6 +276,7 @@ public class Game implements ActionListener, Observer {
         gameView.updateGrid(grid);
     }
     
+    // checks for all cards matched or time/lives are gone
     private void checkGameOver() {
     	// check for life loss
     	if (lives == 0 && isLivesMode) {
@@ -313,26 +322,31 @@ public class Game implements ActionListener, Observer {
     	return true;
     }
     
+    // if selected Card is a SpecialCard update the gameView
     private void checkForSpecial(Card card) {
     	if (card instanceof SpecialCard) {
     		gameView.updateStatus(((SpecialCard)card).getAbilityMessage());
     	}
     }
     
+    // add an observer
     public void registerObserver(Observer o) {
     	this.observers.add(o);
     }
     
+    // remove an observer
     public void deregisterObserver(Observer o) {
     	this.observers.remove(o);
     }
     
+    // notify observers
     private void notifyObservers(String event, Object obj) {
     	for (Observer o : observers) {
     		o.update(event, obj);
     	}
     }
 
+    // update console when event happens
 	@Override
 	public void update(String event, Object obj) {
 		if (event.equals("card_flipped")) {
