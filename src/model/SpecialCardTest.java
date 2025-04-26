@@ -87,4 +87,65 @@ class SpecialCardTest {
         specialCard.flip(grid2);
         assertEquals(0,0);
     }
+
+    @Test
+    void testRandomCheck(){
+        Grid grid = new Grid(6, 6);
+        grid.createGrid(3);
+        SpecialCard specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(2);
+        Card card1 = grid.getCard(1, 4);
+        Card card2 = grid.getCard(4, 0);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(1);
+        card1 = grid.getCard(1, 4);
+        card2 = grid.getCard(4, 0);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(3);
+        card1 = grid.getCard(1, 4);
+        card2 = grid.getCard(4, 0);
+        card1.freeze();
+        card2.highlight();
+        specialCard.flip(grid);
+
+        
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(5);
+        card1 = grid.getCard(1, 4);
+        card2 = grid.getCard(4, 0);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+        
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(5);
+        card1 = grid.getCard(5, 1);
+        card2 = grid.getCard(5, 2);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(5);
+        card1 = grid.getCard(5, 1);
+        card2 = grid.getCard(5, 2);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+        
+    }
 }

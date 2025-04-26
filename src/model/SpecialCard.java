@@ -19,6 +19,10 @@ public class SpecialCard extends Card{
     	}
     }
     
+	public void setSeed(int num){
+			random = new Random(num);
+	}
+
     // returns ability message
     public String getAbilityMessage() {
     	return abilityMessage;
