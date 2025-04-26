@@ -191,7 +191,6 @@ public class Game implements ActionListener, Observer {
     	secondCard.highlight();
     	secondCard.flip(grid);
     	addSeenCardValue(secondCard);
-    	checkForSpecial(firstCard);
         if (firstCard.getValue() == secondCard.getValue() && firstCard != secondCard) {
             handleMatch();
         } else {
@@ -207,11 +206,13 @@ public class Game implements ActionListener, Observer {
         	gameView.updateLife("Lives: " + lives);
         	alreadySeen = false;
         }
+        checkForSpecial(secondCard);
         checkGameOver();
     }
     
     private void handleMismatch() {
         gameView.updateStatus("Not a match. Try again.");
+        checkForSpecial(secondCard);
         if(alreadySeen && isLivesMode) {
         	lives--;
         	gameView.updateLife("Lives: " + lives);

@@ -71,8 +71,7 @@ public class SpecialCard extends Card{
     	//if (lifeMode == true){ 
     	//abilityNum = random.nextInt(0,7)}
     	//else{
-    	abilityNum = random.nextInt(1,6);
-    	abilityNum = 6; //0,2,5,6
+    	abilityNum = random.nextInt(1,7);
     	if (abilityNum == 0){
     		addLife();
     		System.out.println("one extra life has been granted");
@@ -86,7 +85,7 @@ public class SpecialCard extends Card{
     	if (abilityNum == 2){
     		swapCards(grid);
     		System.out.println("2 cards have been swapped");
-    		abilityMessage = "*SPECIAL CARD* 2 cards hafve been swapped";
+    		abilityMessage = "*SPECIAL CARD* 2 cards have been swapped";
     	}
     	if (abilityNum == 3){
     		freeze(grid);
