@@ -13,12 +13,14 @@ public class SpecialCard extends Card{
     	abilityNum = random.nextInt(1,6);
     }
     
+	//sets the abilityNum to a number if valid
     public void setAbility(int num){
     	if (0 <= num && num <= 6){
     		abilityNum = num;
     	}
     }
     
+	//sets the seed of random of the SpecialCard
 	public void setSeed(int num){
 			random = new Random(num);
 	}
@@ -125,11 +127,12 @@ public class SpecialCard extends Card{
     	this.setFlip(true);
     }
     
+	//adds a life
     private void addLife(){
     	//lives++;
     }
     
-    //flips 2 random cards to show the player
+    //flips 2 random unlocked cards to show the player
     private void flipRandom(Grid grid){
 		int randomX1 = random.nextInt(grid.getRows());
 		int randomY1 = random.nextInt(grid.getColumns());
@@ -158,7 +161,7 @@ public class SpecialCard extends Card{
 		card2.flip(grid);
 	}
     
-    //swaps 2 random unflipped cards
+    //swaps 2 random unflipped and unlocked cards
     private void swapCards(Grid grid) {
 		if (grid.getRemainingPairs() == 0){
 			return;
