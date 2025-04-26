@@ -99,7 +99,7 @@ public class SpecialCard extends Card{
     	if (abilityNum == 2){
     		swapCards(grid);
     		System.out.println("2 cards have been swapped");
-    		abilityMessage = "*SPECIAL CARD* 2 cards hafve been swapped";
+    		abilityMessage = "*SPECIAL CARD* 2 cards have been swapped";
     	}
     	if (abilityNum == 3){
     		freeze(grid);

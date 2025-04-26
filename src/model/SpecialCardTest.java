@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 class SpecialCardTest {
     @Test
     void test() {
-    Random random = new Random(1);
         SpecialCard specialCard = new SpecialCard();
         assertTrue(specialCard instanceof Card);
         assertFalse(specialCard.isFlipped());

@@ -44,6 +44,11 @@ class GridTest {
         testCard.setValue(99); 
         grid.setGridCell(testCard, 2, 2);
         assertEquals(testCard, grid.getCard(2, 2));
+        grid.getCard(-9, -10);
+        assertEquals(8,grid.getRemainingPairs());
+        assertEquals(1,grid.getDifficulty());
+        grid.flipCard(0,0);
+        grid.flipCard(0,0);
         
         // Test iterator
         int count = 0;

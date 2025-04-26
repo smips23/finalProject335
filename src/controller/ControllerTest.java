@@ -18,7 +18,7 @@ class ControllerTest {
 		ActionEvent e1 = new ActionEvent(c, 1, "standard");
 		ActionEvent e2 = new ActionEvent(c, 2, "timed");
 		ActionEvent e3 = new ActionEvent(c, 3, "lives");
-		ActionEvent e4 = new ActionEvent(c, 4, "special");
+		ActionEvent e4 = new ActionEvent(c, 4, "crazy");
 		ActionEvent e5 = new ActionEvent(c, 5, "easy");
 		ActionEvent e6 = new ActionEvent(c, 6, "normal");
 		ActionEvent e7 = new ActionEvent(c, 7, "hard");
@@ -31,7 +31,7 @@ class ControllerTest {
 		c.actionPerformed(e3);
 		assertEquals("lives", c.getMode());
 		c.actionPerformed(e4);
-		assertEquals("special", c.getMode());
+		assertEquals("crazy", c.getMode());
 		c.actionPerformed(e5);
 		assertEquals("easy", c.getDifficulty());
 		c.actionPerformed(e6);
