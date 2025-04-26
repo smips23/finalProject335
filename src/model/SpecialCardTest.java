@@ -145,6 +145,33 @@ class SpecialCardTest {
         card1.lock();
         card2.lock();
         specialCard.flip(grid);
+     
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(1000);
+        card1 = grid.getCard(5, 1);
+        card2 = grid.getCard(5, 2);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(0);
+        card1 = grid.getCard(5, 1);
+        card2 = grid.getCard(5, 2);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
+
         
+        specialCard = new SpecialCard();
+        specialCard.setSeed(100);
+        specialCard.setAbility(1);
+        card1 = grid.getCard(1, 4);
+        card2 = grid.getCard(4, 0);
+        card1.lock();
+        card2.lock();
+        specialCard.flip(grid);
     }
 }
