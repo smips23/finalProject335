@@ -21,6 +21,7 @@ public class Game implements ActionListener, Observer {
     private Timer flipBackTimer;
     private int secondsRemaining;
     private int lives;
+    private boolean manualWin;
     private ArrayList<Card> seenCardValues;
     private boolean alreadySeen;
     private boolean isTimedMode;
@@ -274,7 +275,7 @@ public class Game implements ActionListener, Observer {
                 }
             }
         }
-        if (allLocked) {
+        if (allLocked || manualWin) {
         	if (isTimedMode) {
         		flipBackTimer.stop();
         	}
@@ -319,13 +320,46 @@ public class Game implements ActionListener, Observer {
 	@Override
 	public void update(String event, Object obj) {
 		if (event.equals("card_flipped")) {
-			Card card = (Card) obj;
 			System.out.println("Card was flipped to face");
 		}
 		else if (event.equals("pair_found")){
 			System.out.println("Pair found");
 		}
-		
 	}
+	
+	// used for testing
+    public boolean getTimedMode() {
+    	return this.isTimedMode;
+    }
+    
+    // used for testing
+    public boolean getLivesMode() {
+    	return this.isLivesMode;
+    }
+    
+    // used for testing
+    public void setSeen() {
+    	alreadySeen = true;
+    }
+    
+    // used for testing
+    public void forceSpecialCard(SpecialCard c) {
+    	this.checkForSpecial(c);
+    }
+    
+    // used for testing
+    public void endLives() {
+    	this.lives = 0;
+    }
+    
+    // used for testing
+    public void setWin() {
+    	manualWin = true;
+    }
+    
+    // used for testing
+    public void forceGameOver() {
+    	this.checkGameOver();
+    }
     
 }
