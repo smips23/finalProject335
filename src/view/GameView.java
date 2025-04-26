@@ -5,12 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import model.Grid;
 import model.Card;
+import model.Observer;
 
 /**
  * Main game window for the memory card game
  * Handles both the window and grid display
  */
-public class GameView extends JFrame {
+public class GameView extends JFrame implements Observer {
     private JButton[][] cardButtons;
     private JLabel statusLabel;
     private JLabel timerLabel;
@@ -182,4 +183,16 @@ public class GameView extends JFrame {
     public void updateLife(String lives) {
     	lifeLabel.setText(lives);
     }
+
+	@Override
+	public void update(String event, Object obj) {
+		if (event.equals("card_flipped")) {
+			Card card = (Card) obj;
+			System.out.println("Card was flipped to face");
+		}
+		else if (event.equals("pair_found")){
+			System.out.println("Pair found");
+		}
+		
+	}
 }

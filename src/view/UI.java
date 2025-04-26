@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import model.Model;
 
 public class UI extends JFrame {
 	private Controller controller;
@@ -23,7 +22,7 @@ public class UI extends JFrame {
 	private JPanel cardPanel;
 	
 	public UI() {
-		this.controller = new Controller(this, new Model());	
+		this.controller = new Controller(this);	
 		
 		this.setTitle("Matching Game (Main menu)");
 		this.setSize(500, 150);
@@ -31,7 +30,10 @@ public class UI extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setUp();
 	}
-	
+
+	/*
+	 * Creates the main menu window to select the mode and difficulty for the game
+	 */
 	public void setUp() {
 		layout = new CardLayout();
 		cardPanel = new JPanel(layout);
@@ -102,6 +104,9 @@ public class UI extends JFrame {
 		this.setVisible(true);
 	}
 
+	/*
+	 * Switches the panel of the main menu window
+	 */
 	public void switchCard(String str) {
 		layout.show(cardPanel, str);
 	}

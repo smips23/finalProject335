@@ -5,9 +5,11 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import model.Observer;
 
 public class Grid implements Iterable<Card>{
 
+	private ArrayList<Observer> observers;
     private Card[][] cards;
     protected ArrayList<Card> recentCards;
     private int rows;
@@ -20,6 +22,7 @@ public class Grid implements Iterable<Card>{
     public static final int HARD = 3;
 
     public Grid(int rows, int columns){
+    	this.observers = new ArrayList<Observer>();
         this.rows = rows;
         this.columns = columns;
         this.cards = new Card[rows][columns];
@@ -57,6 +60,15 @@ public class Grid implements Iterable<Card>{
         }
         return cards[row][col];
     }
+    
+    public void flipCard(int row, int col) {
+    	Card c = this.getCard(row, col);
+    	if (!c.isFlipped()) {
+    		c.flip(this);
+    		notifyObservers("card_flipped", c);
+    	}
+    }
+    
     // create grid based on difficulty
     public boolean createGrid(int difficulty) {
         this.difficulty = difficulty;
@@ -192,4 +204,17 @@ public class Grid implements Iterable<Card>{
 		}
 	}
 	
+	public void registerObserver(Observer o) {
+		this.observers.add(o);
+	}
+	
+	public void deregisterObserver(Observer o) {
+		this.observers.remove(o);
+	}
+	
+	private void notifyObservers(String event, Object obj) {
+		for (Observer o : observers) {
+			o.update(event, obj);
+		}
+	}
 }
