@@ -10,6 +10,7 @@ import model.Observer;
 public class Grid implements Iterable<Card>{
 
 	private ArrayList<Observer> observers;
+    protected ArrayList<Card> recentCards;
     private Card[][] cards;
     private int rows;
     private int columns;
@@ -25,6 +26,7 @@ public class Grid implements Iterable<Card>{
         this.rows = rows;
         this.columns = columns;
         this.cards = new Card[rows][columns];
+        this.recentCards = new ArrayList<Card>();
    
     }
     // getters for all instance variables
@@ -59,15 +61,6 @@ public class Grid implements Iterable<Card>{
         }
         return cards[row][col];
     }
-    
-    public void flipCard(int row, int col) {
-    	Card c = this.getCard(row, col);
-    	if (!c.isFlipped()) {
-    		c.flip(this);
-    		notifyObservers("card_flipped", c);
-    	}
-    }
-    
     // create grid based on difficulty
     public boolean createGrid(int difficulty) {
         this.difficulty = difficulty;
@@ -187,6 +180,20 @@ public class Grid implements Iterable<Card>{
 				}
 			}
 		};
+	}
+	
+	//adds a card to the recentCards ArrayList
+	public void addRecentCards(Card card){
+		if (card instanceof SpecialCard){
+			return;
+		}
+		if (this.recentCards.size() > 2) {
+			this.recentCards.remove(0);
+			this.recentCards.add(card);
+		}
+		else {
+			this.recentCards.add(card);
+		}
 	}
 	
 	public void registerObserver(Observer o) {
