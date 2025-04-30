@@ -32,7 +32,7 @@ This project follows the **Model-View-Controller (MVC)**
 #### View:
 
 - UI.java: Main menu with game mode and difficulty selection
-- GameView.java: Game board display with card buttons
+- GameView.java: Game board display with card buttons (Used AI in some parts of this class)
 - Main.java: startup view
 
 
