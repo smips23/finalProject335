@@ -8,6 +8,8 @@
 
 ## Project Overview
 
+This is a card-matching game where players flip cards on a grid to find matching pairs. It offers four game modes: Standard (classic matching gameplay), Timed (60-second countdown), Lives (limited mistakes allowed), and Crazy (combines timed and lives challenges). Players select from three difficulty levels (Easy, Normal, Hard), which determine grid size (4×4, 5×5, or 6×6). Special cards can appear that offer unique abilities like revealing random pairs or highlighting potential matches. The game tracks whether you've seen card values before, and in Lives mode, mismatching previously seen cards costs you a life. Match all pairs to win!
+
 ## Design
 This project follows the **Model-View-Controller (MVC)** 
 
